@@ -6,6 +6,7 @@ let snake=[
 ];
 let score=0,hscore=0;
 let foodObject={xdir:8,ydir:10}
+let keyupEvent=true;
 //////////////////////////////////////
 var mainGameStartButton=document.getElementById("mainStartButton");
 var playerOnCanvas=document.getElementById("playerOnCanvas");
@@ -60,6 +61,7 @@ function isCollide(snakeCollide) {
 function mainEngine(){
     if(isCollide(snake)){
         direction =  {xdir: 0, ydir: 0};
+        keyupEvent=false;
         resetGame();
         openModal();
         snake = [{xdir: 13, ydir: 15}];
@@ -103,29 +105,32 @@ function mainEngine(){
 }
 
 window.addEventListener('keydown', e =>{
-    direction = {xdir: 0, ydir: 1}
-    switch (e.key) {
-        case "ArrowUp":
-            direction.xdir = 0;
-            direction.ydir = -1;
-            break;
 
-        case "ArrowDown":
-            direction.xdir = 0;
-            direction.ydir = 1;
-            break;
+    if(keyupEvent) {
+        direction = {xdir: 0, ydir: 1}
+        switch (e.key) {
+            case "ArrowUp":
+                direction.xdir = 0;
+                direction.ydir = -1;
+                break;
 
-        case "ArrowLeft":
-            direction.xdir = -1;
-            direction.ydir = 0;
-            break;
+            case "ArrowDown":
+                direction.xdir = 0;
+                direction.ydir = 1;
+                break;
 
-        case "ArrowRight":
-            direction.xdir = 1;
-            direction.ydir = 0;
-            break;
-        default:
-            break;
+            case "ArrowLeft":
+                direction.xdir = -1;
+                direction.ydir = 0;
+                break;
+
+            case "ArrowRight":
+                direction.xdir = 1;
+                direction.ydir = 0;
+                break;
+            default:
+                break;
+        }
     }
 
 });
@@ -142,6 +147,7 @@ playButton.addEventListener('click', function(event) {
     adsLoaded = false;
     loadAds(event);
     modal.style.display="none";
+    keyupEvent=true;
 });
 
 function initializeIMA() {
