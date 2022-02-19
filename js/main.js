@@ -106,25 +106,21 @@ window.addEventListener('keydown', e =>{
     direction = {xdir: 0, ydir: 1}
     switch (e.key) {
         case "ArrowUp":
-            console.log("ArrowUp");
             direction.xdir = 0;
             direction.ydir = -1;
             break;
 
         case "ArrowDown":
-            console.log("ArrowDown");
             direction.xdir = 0;
             direction.ydir = 1;
             break;
 
         case "ArrowLeft":
-            console.log("ArrowLeft");
             direction.xdir = -1;
             direction.ydir = 0;
             break;
 
         case "ArrowRight":
-            console.log("ArrowRight");
             direction.xdir = 1;
             direction.ydir = 0;
             break;
@@ -149,7 +145,6 @@ playButton.addEventListener('click', function(event) {
 });
 
 function initializeIMA() {
-    console.log("initializing IMA");
     adContainer = document.getElementById('ad-container');
     adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
     adsLoader = new google.ima.AdsLoader(adDisplayContainer);
@@ -179,7 +174,6 @@ function loadAds(event) {
     }
     adsLoaded = true;
     event.preventDefault();
-    console.log("loading ads");
     adDisplayContainer.initialize();
     var width = adContainer.clientWidth;
     var height = adContainer.clientHeight;
@@ -187,7 +181,6 @@ function loadAds(event) {
         adsManager.init(width, height, google.ima.ViewMode.NORMAL);
         adsManager.start();
     } catch (adError) {
-        console.log(adError);
         console.log("AdsManager could not be started");
     }
 }
@@ -202,7 +195,6 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
 function onAdError(adErrorEvent) {
     console.log(adErrorEvent.getError());
     if(adsManager) {
-        console.log('destroyed');
         adsManager.destroy();
     }
 }
