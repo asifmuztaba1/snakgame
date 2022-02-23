@@ -8,10 +8,13 @@ let score=0,hscore=0;
 let foodObject={xdir:8,ydir:10}
 let keyupEvent=true;
 //////////////////////////////////////
-var mainGameStartButton=document.getElementById("mainStartButton");
+
 var playerOnCanvas=document.getElementById("playerOnCanvas");
 var playGameWraper=document.getElementById("playGameWraper");
-mainGameStartButton.onclick = function (){
+var modal = document.getElementById("gameControllerModal");
+var modaltoexit = document.getElementById("gameControllerModaltoExit");
+
+function mainStart (){
     playGameWraper.style.display="none";
     playerOnCanvas.style.display="block";
     window.requestAnimationFrame(main);
@@ -21,22 +24,17 @@ function resetGame(){
     speed=10;
     initializeIMA();
 }
+function closeButton() {
+    modal.style.display = "none";
+    playGameWraper.style.display="flex";
+    playerOnCanvas.style.display="none";
+    window.location.reload();
+}
+function openModaltoExit(){
+    modaltoexit.style.display = "block";
+}
 function openModal(){
-    var modal = document.getElementById("gameControllerModal");
-    var span = document.getElementsByClassName("closeButton")[0];
-    var startOver = document.getElementsByClassName("startButton")[0];
     modal.style.display = "block";
-    span.onclick = function() {
-        modal.style.display = "none";
-        playGameWraper.style.display="flex";
-        playerOnCanvas.style.display="none";
-        window.location.reload();
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
 }
 function main(currenttime){
     window.requestAnimationFrame(main);
@@ -104,36 +102,7 @@ function mainEngine(){
     board.appendChild(food);
 }
 
-window.addEventListener('keydown', e =>{
 
-    if(keyupEvent) {
-        direction = {xdir: 0, ydir: 1}
-        switch (e.key) {
-            case "ArrowUp":
-                direction.xdir = 0;
-                direction.ydir = -1;
-                break;
-
-            case "ArrowDown":
-                direction.xdir = 0;
-                direction.ydir = 1;
-                break;
-
-            case "ArrowLeft":
-                direction.xdir = -1;
-                direction.ydir = 0;
-                break;
-
-            case "ArrowRight":
-                direction.xdir = 1;
-                direction.ydir = 0;
-                break;
-            default:
-                break;
-        }
-    }
-
-});
 ////////////////////////////////////////////////////////
 var adContainer;
 var adsLoaded = false;
@@ -143,12 +112,12 @@ var adsManager;
 var adContainer
 var playButton = document.getElementById('startOverButton');
 var modal = document.getElementById("gameControllerModal");
-playButton.addEventListener('click', function(event) {
+function startOver(event) {
     adsLoaded = false;
     loadAds(event);
     modal.style.display="none";
     keyupEvent=true;
-});
+};
 
 function initializeIMA() {
     adContainer = document.getElementById('ad-container');
@@ -179,7 +148,6 @@ function loadAds(event) {
         return;
     }
     adsLoaded = true;
-    event.preventDefault();
     adDisplayContainer.initialize();
     var width = adContainer.clientWidth;
     var height = adContainer.clientHeight;
@@ -204,3 +172,60 @@ function onAdError(adErrorEvent) {
         adsManager.destroy();
     }
 }
+window.addEventListener('keydown', e =>{
+
+    if(keyupEvent) {
+        direction = {xdir: 0, ydir: 1}
+        switch (e.key) {
+            case "S":
+            case "s":
+                mainStart();
+                break;
+            case "E":
+            case "e":
+                openModaltoExit();
+                break;
+            case "Y":
+            case "y":
+                window.location.href="https://google.com";
+                break;
+            case "N":
+            case "n":
+                window.location.reload();
+                break;
+            case "ArrowUp":
+                direction.xdir = 0;
+                direction.ydir = -1;
+                break;
+
+            case "ArrowDown":
+                direction.xdir = 0;
+                direction.ydir = 1;
+                break;
+
+            case "ArrowLeft":
+                direction.xdir = -1;
+                direction.ydir = 0;
+                break;
+
+            case "ArrowRight":
+                direction.xdir = 1;
+                direction.ydir = 0;
+                break;
+            default:
+                break;
+        }
+    }else{
+        switch (e.key){
+            case "P":
+            case "p":
+                startOver();
+                break;
+            case "c":
+            case "C":
+                closeButton();
+                break;
+        }
+    }
+
+});

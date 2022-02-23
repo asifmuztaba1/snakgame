@@ -93,6 +93,11 @@ body{
     font-size: 30px;
     font-weight: bolder;
 }
+#gameControllerModaltoExit{
+    top: 31%;
+    background-color: #000;
+    max-width: 500px;
+}
 #ad-container {
     position: absolute;
     top: 114px;
